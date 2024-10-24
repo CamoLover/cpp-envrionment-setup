@@ -163,43 +163,75 @@ echo .vscode/
 )
 
 :: Create build script with full path
+:: Create build script with full path
 echo Creating build script...
 (
 echo @echo off
+echo setlocal enabledelayedexpansion
 echo.
-echo if not exist build mkdir build
-echo cd build
-echo cmake ..
-echo cmake --build .
+echo :: Get the directory where the batch file is located
+echo set "SCRIPT_DIR=%%~dp0"
+echo cd /d "%%SCRIPT_DIR%%"
 echo.
-echo if errorlevel 1 ^(
-echo     echo Build failed!
+echo echo Building project in: %%SCRIPT_DIR%%
+echo echo.
+echo.
+echo if not exist "%%SCRIPT_DIR%%build" ^(
+echo     echo Creating build directory...
+echo     mkdir "%%SCRIPT_DIR%%build" ^|^| ^(
+echo         echo ERROR: Failed to create build directory
+echo         pause
+echo         exit /b 1
+echo     ^)
+echo ^)
+echo.
+echo echo Entering build directory...
+echo cd "%%SCRIPT_DIR%%build" ^|^| ^(
+echo     echo ERROR: Failed to enter build directory
 echo     pause
 echo     exit /b 1
 echo ^)
 echo.
+echo echo Running CMake configure...
+echo cmake .. ^|^| ^(
+echo     echo ERROR: CMake configuration failed
+echo     pause
+echo     exit /b 1
+echo ^)
+echo.
+echo echo Building project...
+echo cmake --build . ^|^| ^(
+echo     echo ERROR: Build failed
+echo     cd ..
+echo     pause
+echo     exit /b 1
+echo ^)
+echo.
+echo echo.
 echo echo Build successful!
+echo echo Built files are in: %%SCRIPT_DIR%%build
+echo echo.
+echo.
+echo :: Find and run the executable
+echo echo Running the program:
+echo echo ==================
+echo echo.
+echo if exist "Debug\MyProject.exe" ^(
+echo     Debug\MyProject.exe
+echo ^) else if exist "MyProject.exe" ^(
+echo     MyProject.exe
+echo ^) else ^(
+echo     echo Could not find executable. It might be in a different location.
+echo     dir /s /b MyProject.exe
+echo ^)
+echo echo.
+echo echo ==================
+echo echo.
+echo.
+echo cd ..
 echo pause
 ) > "%SCRIPT_DIR%build.bat" || (
     echo ERROR: Failed to create build.bat
     pause
     exit /b 1
 )
-
-echo.
-echo Project setup complete! Here's what was created in: %SCRIPT_DIR%
-echo - src/main.cpp ^(with Hello World program^)
-echo - include/ ^(for header files^)
-echo - lib/ ^(for libraries^)
-echo - build/ ^(for compiled files^)
-echo - CMakeLists.txt ^(for CMake build system^)
-echo - .gitignore ^(basic Git ignore rules^)
-echo - build.bat ^(script to build the project^)
-echo.
-dir "%SCRIPT_DIR%"
-echo.
-echo To build your project:
-echo 1. Run build.bat
-echo 2. The executable will be created in the build directory
-echo.
-pause
