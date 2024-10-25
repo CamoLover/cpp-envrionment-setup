@@ -68,16 +68,16 @@ void processCommand(const std::string& command) {
             ss << std::setw(3) << std::setfill('0') << num; // Format as 3-digit with leading zeros
             std::string formattedNumber = ss.str();
             std::string url = "http://fondationscp.wikidot.com/scp-" + formattedNumber;
-            std::cout << "Link: " << url << std::endl;
+            animatedPrint("Link: " + url);
         } catch (const std::invalid_argument&) {
-            std::cout << "Invalid SCP number format: " << scpNumber << std::endl;
+            animatedPrint("Invalid SCP number format: " + scpNumber);
         } catch (const std::out_of_range&) {
-            std::cout << "SCP number out of range: " << scpNumber << std::endl;
+            animatedPrint("SCP number out of range: " + scpNumber);
         }
     }
     else if (command != "exit") {
-        std::cout << "Unknown command: " << command << "\n";
-        std::cout << "Type 'help' for available commands.\n";
+        animatedPrint("Unknown command: " + command);
+        animatedPrint("Type 'help' for available commands.");
     }
 }
 
@@ -88,14 +88,14 @@ int main() {
     // Login process
     std::string username, password;
     
-    std::cout << "Login: ";
+    animatedPrint("Login: ");
     std::getline(std::cin, username);
     
-    std::cout << "Password: ";
+    animatedPrint("Password: ");
     std::getline(std::cin, password);
 
     if (username != "Hartmann" || password != "demission") {
-        std::cout << "[ERROR] Invalid credentials.\n";
+        animatedPrint("[ERROR] Invalid credentials.");
         return 1;
     }
 
