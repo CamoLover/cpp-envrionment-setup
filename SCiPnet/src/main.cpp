@@ -3,6 +3,9 @@
 #include <thread>
 #include <chrono>
 #include <cstdlib>
+#include <iomanip>
+#include <sstream>
+
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -42,6 +45,7 @@ void processCommand(const std::string& command) {
         std::cout << "clear    - Clear the screen\n";
         std::cout << "exit     - Exit the terminal\n";
         std::cout << "status   - Show system status\n";
+        std::cout << "rs <num> - Show SCP link for the specified SCP number\n";
     }
     else if (command == "clear") {
         #ifdef _WIN32
@@ -55,6 +59,21 @@ void processCommand(const std::string& command) {
         animatedPrint("[INFO] All systems operational");
         animatedPrint("[INFO] Security protocols active");
         animatedPrint("[INFO] Network connection: Stable");
+    }
+    else if (command.rfind("rs ", 0) == 0) { // Check if command starts with "rs "
+        std::string scpNumber = command.substr(3); // Extract the SCP number
+        try {
+            int num = std::stoi(scpNumber); // Convert to integer
+            std::stringstream ss;
+            ss << std::setw(3) << std::setfill('0') << num; // Format as 3-digit with leading zeros
+            std::string formattedNumber = ss.str();
+            std::string url = "http://fondationscp.wikidot.com/scp-" + formattedNumber;
+            std::cout << "Link: " << url << std::endl;
+        } catch (const std::invalid_argument&) {
+            std::cout << "Invalid SCP number format: " << scpNumber << std::endl;
+        } catch (const std::out_of_range&) {
+            std::cout << "SCP number out of range: " << scpNumber << std::endl;
+        }
     }
     else if (command != "exit") {
         std::cout << "Unknown command: " << command << "\n";
