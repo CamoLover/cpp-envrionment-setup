@@ -17,6 +17,9 @@ An interactive game where:
 ### 3. Mystery Island
 A text-based adventure game where players navigate through an interactive story.
 
+### 4. SCiPnet
+A fake SCP terminal, ressembling a SCiPnet terminal from the SCP foundation.
+
 ## Setup Instructions
 
 1. **Initial Setup**
