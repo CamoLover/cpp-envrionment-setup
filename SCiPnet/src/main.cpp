@@ -21,7 +21,7 @@ void setGreenText() {
 }
 
 // Function to print text with animation
-void animatedPrint(const std::string& text, int delay_ms = 30) {
+void animatedPrint(const std::string& text, int delay_ms = 5) {
     for (char c : text) {
         std::cout << c << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
@@ -40,12 +40,12 @@ const std::string SCIPNET_LOGO = R"(
 
 void processCommand(const std::string& command) {
     if (command == "help") {
-        std::cout << "\nAvailable commands:\n";
-        std::cout << "help     - Show this help message\n";
-        std::cout << "clear    - Clear the screen\n";
-        std::cout << "exit     - Exit the terminal\n";
-        std::cout << "status   - Show system status\n";
-        std::cout << "rs <num> - Show SCP link for the specified SCP number\n";
+        animatedPrint("\nAvailable commands:");
+        animatedPrint("help     - Show this help message");
+        animatedPrint("clear    - Clear the screen");
+        animatedPrint("exit     - Exit the terminal");
+        animatedPrint("status   - Show system status");
+        animatedPrint("rs <num> - Show SCP link for the specified SCP number");
     }
     else if (command == "clear") {
         #ifdef _WIN32
