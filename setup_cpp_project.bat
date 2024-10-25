@@ -1,6 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
+color b
+
 :: Get the directory where the batch file is located
 set "SCRIPT_DIR=%~dp0"
 cd /d "%SCRIPT_DIR%"
@@ -169,6 +171,7 @@ echo Creating build script...
 echo @echo off
 echo setlocal enabledelayedexpansion
 echo.
+echo color a
 echo :: Get the directory where the batch file is located
 echo set "SCRIPT_DIR=%%~dp0"
 echo cd /d "%%SCRIPT_DIR%%"
@@ -214,7 +217,7 @@ echo echo.
 echo.
 echo :: Find and run the executable
 echo echo Running the program:
-echo echo ==================
+echo echo ======================================================
 echo echo.
 echo if exist "Debug\MyProject.exe" ^(
 echo     Debug\MyProject.exe
@@ -225,7 +228,7 @@ echo     echo Could not find executable. It might be in a different location.
 echo     dir /s /b MyProject.exe
 echo ^)
 echo echo.
-echo echo ==================
+echo echo ======================================================
 echo echo.
 echo.
 echo cd ..
