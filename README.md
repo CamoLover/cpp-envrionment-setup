@@ -35,14 +35,17 @@ A text-based adventure game where players navigate through an interactive story.
 ## Project Structure
 ```
 cpp-projects/
-├── setup.bat            # Environment setup script
-├── build.bat            # Build and execution script
-├── test/               
-│   └── main.cpp         # Hello World program
+├── setup_cpp_project.bat    # Environment setup script
+├── test/
+│   ├── test/         
+│   │   └── main.cpp         # Hello World program
+│   └── build.bat            # Build and execution script
 ├── NumberGuessing/     
-│   └── main.cpp         # Number guessing game
+│   │   └── main.cpp         # Number Guessing game program
+│   └── build.bat            # Build and execution script
 └── MysteryIsland/      
-    └── main.cpp         # Text adventure game
+│   │   └── main.cpp         # Mysteryisland program
+│   └── build.bat            # Build and execution script
 ```
 
 ## Requirements
@@ -50,7 +53,7 @@ cpp-projects/
 - Administrator privileges (for initial setup)
 
 ## Building Individual Projects
-Each project can be built separately by navigating to its directory and running:
+Each project can be built separately by navigating to its directory and running there:
 ```batch
 build.bat
 ```
@@ -63,5 +66,3 @@ Feel free to contribute to any of the projects:
 4. Push to the branch
 5. Create a Pull Request
 
-## License
-[Add your chosen license here]
