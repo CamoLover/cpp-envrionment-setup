@@ -21,7 +21,7 @@ A text-based adventure game where players navigate through an interactive story.
 
 1. **Initial Setup**
    - Clone this repository
-   - Right-click `setup.bat` and select "Run as administrator"
+   - Right-click `setup_cpp_project.bat` and select "Run as administrator"
    - The script will:
      - Install necessary dependencies
      - Generate required configuration files
