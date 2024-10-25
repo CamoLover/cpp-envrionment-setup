@@ -63,6 +63,18 @@ if %errorlevel% neq 0 (
     echo.
 )
 
+:: Ensure MinGW is in PATH
+set MINGW_DIR=C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin
+if exist "%MINGW_DIR%" (
+    echo Adding MinGW to PATH...
+    setx PATH "%PATH%;%MINGW_DIR%"
+    set PATH=%PATH%;%MINGW_DIR%
+) else (
+    echo ERROR: MinGW directory not found. Ensure MinGW is installed correctly.
+    pause
+    exit /b 1
+)
+
 :: Check and install CMake
 echo Checking for CMake...
 where cmake >nul 2>&1
@@ -142,6 +154,9 @@ echo.
 echo set^(CMAKE_CXX_STANDARD 17^)
 echo set^(CMAKE_CXX_STANDARD_REQUIRED ON^)
 echo.
+echo set^(CMAKE_C_COMPILER gcc^)
+echo set^(CMAKE_CXX_COMPILER g++^)
+echo.
 echo add_executable^(${PROJECT_NAME} src/main.cpp^)
 echo.
 echo target_include_directories^(${PROJECT_NAME} PRIVATE include^)
@@ -164,7 +179,6 @@ echo .vscode/
     exit /b 1
 )
 
-:: Create build script with full path
 :: Create build script with full path
 echo Creating build script...
 (
@@ -196,7 +210,7 @@ echo     exit /b 1
 echo ^)
 echo.
 echo echo Running CMake configure...
-echo cmake .. ^|^| ^(
+echo cmake -G "MinGW Makefiles" .. ^|^| ^(
 echo     echo ERROR: CMake configuration failed
 echo     pause
 echo     exit /b 1
