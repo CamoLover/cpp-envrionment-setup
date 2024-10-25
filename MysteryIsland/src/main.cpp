@@ -1,8 +1,9 @@
+// main.cpp
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <vector>
-#include <string>
+#include "Character.h"
 
 void showIntro() {
     std::cout << "Bienvenue sur l'ile (lost ou quoi ?)\n";
@@ -11,9 +12,19 @@ void showIntro() {
     std::cout << "Trouverez-vous des tresors, echapperez-vous de cet endroit, ou allez-vous completement mourir ?\n\n";
 }
 
+Enemy generateRandomEnemy() {
+    std::vector<Enemy> enemies = {
+        Enemy("Sanglier", 30, 30),
+        Enemy("Serpent", 20, 20),
+        Enemy("Pirate", 40, 40),
+        Enemy("Fantome", 50, 50)
+    };
 
+    int index = std::rand() % enemies.size();
+    return enemies[index];
+}
 
-void exploreIsland(int& health, std::vector<std::string>& inventory) {
+void exploreIsland(Player& player) {
     std::cout << "    __  ____      __                     ____     __                __\n";
     std::cout << "   /  |/  (_)____/ /____  _______  __   /  _/____/ /___ _____  ____/ /\n";
     std::cout << "  / /|_/ / / ___/ __/ _ \\/ ___/ / / /   / // ___/ / __ `/ __ \\/ __  / \n";
@@ -33,45 +44,41 @@ void exploreIsland(int& health, std::vector<std::string>& inventory) {
     std::cin >> choice;
 
     switch (choice) {
-        case 1: // Explore la foret
-            std::cout << "Vous rentree dans la foret et rencontrer un sanglier\n";
-            health -= 10;
-            std::cout << "Vous perdez 10PV, vous avez maintenant " << health << "\n";
-            if (health <= 0) {
+        case 1: { // Explore la foret
+            Enemy enemy = generateRandomEnemy();
+            std::cout << "Vous rencontrez un " << enemy.getName() << " dans la foret!\n";
+            enemy.display();
+            player.takeDamage(10);
+            std::cout << "Vous perdez 10PV, vous avez maintenant " << player.getHealth() << "\n";
+            if (!player.isAlive()) {
                 std::cout << "Vous etes mort. Game over!\n";
                 exit(0);
             }
             break;
+        }
 
-        case 2: // Visite la plage
+        case 2: { // Visite la plage
             std::cout << "Vous voyez une plage magnifique et un coffre au tresor\n";
             std::cout << "Ouvrir le coffre ? (1 pour Oui, 2 pour Non): ";
             int openChest;
             std::cin >> openChest;
             if (openChest == 1) {
                 std::cout << "Bravo! il y a une piece d'or!\n";
-                inventory.push_back("Piece d'or");
+                player.addToInventory("Piece d'or");
             } else {
                 std::cout << "Vous laisser le coffre\n";
             }
             break;
+        }
 
         case 3: // Grimppe la montagne
             std::cout << "Vous grimper la montagne\n";
-            health += 10;
-            std::cout << "Vous gagner 10pv avec cette air frais, vous avez maintenant " << health << "\n";
+            player.heal(10);
+            std::cout << "Vous gagner 10pv avec cette air frais, vous avez maintenant " << player.getHealth() << "\n";
             break;
 
         case 4: // Inventaire
-            std::cout << "------------------------\n";
-            std::cout << "Inventaire :\n";
-            for (const auto& item : inventory) {
-                std::cout << "- " << item << "\n";
-            }
-            if (inventory.empty()) {
-                std::cout << "Your inventory is empty.\n";
-            }
-            std::cout << "------------------------\n";
+            player.showInventory();
             break;
 
         case 5: // Quitte le jeu
@@ -86,13 +93,12 @@ void exploreIsland(int& health, std::vector<std::string>& inventory) {
 
 int main() {
     std::srand(static_cast<unsigned int>(std::time(0)));
-    int health = 100; // vie de base
-    std::vector<std::string> inventory; // Inventaire
+    Player player("Joueur", 100, 100);
 
     showIntro();
 
     while (true) {
-        exploreIsland(health, inventory);
+        exploreIsland(player);
     }
 
     return 0;
