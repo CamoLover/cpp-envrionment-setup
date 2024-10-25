@@ -120,7 +120,7 @@ echo Creating main.cpp...
 echo #include ^<iostream^>
 echo.
 echo int main^(^) {
-echo     std::cout ^<^< "Hello, World!" ^<^< std::endl;
+echo     std::cout ^<^< "Hello, World" ^<^< std::endl;
 echo     return 0;
 echo }
 ) > "%SCRIPT_DIR%src\main.cpp" || (
