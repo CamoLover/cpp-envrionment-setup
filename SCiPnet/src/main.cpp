@@ -8,6 +8,7 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <shellapi.h>
 #endif
 
 // Function to set text color to green
@@ -43,9 +44,10 @@ void processCommand(const std::string& command) {
         animatedPrint("\nAvailable commands:");
         animatedPrint("help     - Show this help message");
         animatedPrint("clear    - Clear the screen");
-        animatedPrint("exit     - Exit the terminal");
-        animatedPrint("status   - Show system status");
         animatedPrint("rs <num> - Show SCP link for the specified SCP number");
+        animatedPrint("pixeleur - Open pixeleur website");
+        animatedPrint("------");
+        animatedPrint("exit     - Exit the terminal");
     }
     else if (command == "clear") {
         #ifdef _WIN32
@@ -54,11 +56,9 @@ void processCommand(const std::string& command) {
         system("clear");
         #endif
     }
-    else if (command == "status") {
-        animatedPrint("[INFO] System Status:");
-        animatedPrint("[INFO] All systems operational");
-        animatedPrint("[INFO] Security protocols active");
-        animatedPrint("[INFO] Network connection: Stable");
+    else if (command == "pixeleur") {
+        animatedPrint("[INFO] Ouverture du site de Pixeleur...");
+        ShellExecute(0, 0, "http://www.pixeleur.fr", 0, 0 , SW_SHOW );
     }
     else if (command.rfind("rs ", 0) == 0) { // Check if command starts with "rs "
         std::string scpNumber = command.substr(3); // Extract the SCP number
@@ -88,10 +88,10 @@ int main() {
     // Login process
     std::string username, password;
     
-    animatedPrint("Login: ");
+    std::cout <<"Login: " << std::flush;
     std::getline(std::cin, username);
     
-    animatedPrint("Password: ");
+    std::cout <<"Password: " << std::flush;
     std::getline(std::cin, password);
 
     if (username != "Hartmann" || password != "demission") {
@@ -118,6 +118,7 @@ int main() {
     std::cout << std::endl;
 
     animatedPrint("[INFO] Bienvenue, Superviseur Hartmann.");
+    animatedPrint("[INFO] Vous avez [2] nouveaux messages.");
     animatedPrint("[INFO] Faite help.");
 
     // Command loop
