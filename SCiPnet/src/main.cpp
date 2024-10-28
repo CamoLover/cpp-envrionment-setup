@@ -45,7 +45,7 @@ void showHelp() {
     animatedPrint("\nAvailable commands:");
     animatedPrint("help           - Show this help message");
     animatedPrint("clear          - Clear the screen");
-    animatedPrint("rs <num>      - Show SCP link for the specified SCP number");
+    animatedPrint("rs <num>       - Show SCP link for the specified SCP number");
     animatedPrint("pixeleur       - Open Pixeleur website");
     animatedPrint("log <message>  - Log a message to the system log");
     animatedPrint("status         - Check system status");
@@ -156,9 +156,9 @@ int main() {
     animatedPrint(SCIPNET_LOGO);
     std::cout << std::endl;
 
-    animatedPrint("[INFO] Bienvenue, Superviseur Hartmann.");
-    animatedPrint("[INFO] Vous avez [2] nouveaux messages.");
-    animatedPrint("[INFO] Faite help.");
+    animatedPrint("[INFO] Welcome, Supervisor Hartmann.");
+    animatedPrint("[INFO] You currently have [2] new messages.");
+    animatedPrint("[INFO] write help.");
 
     // Command loop
     std::string command;

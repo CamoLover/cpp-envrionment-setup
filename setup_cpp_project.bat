@@ -8,6 +8,7 @@ set "SCRIPT_DIR=%~dp0"
 cd /d "%SCRIPT_DIR%"
 
 echo Starting C++ Project Setup in: %SCRIPT_DIR%
+echo Powered by Camolover
 echo.
 pause
 
@@ -214,6 +215,7 @@ echo set "SCRIPT_DIR=%%~dp0"
 echo cd /d "%%SCRIPT_DIR%%"
 echo.
 echo echo Building project in: %%CD%% 
+echo echo Powered by Camolover
 echo echo.
 echo.
 echo :: Extract project name from CMakeLists.txt
@@ -252,7 +254,7 @@ echo echo.
 echo.
 echo :: Run the executable
 echo if exist "%%PROJECT_NAME%%.exe" ^(
-echo     echo Running the program:
+echo     echo Running %%PROJECT_NAME%%.exe :
 echo     echo =====================
 echo     %%PROJECT_NAME%%.exe
 echo     echo =====================
@@ -293,9 +295,9 @@ cd ..
 
 echo.
 echo Setup complete! You can now:
-echo 1. Open the project in Visual Studio Code
-echo 2. Use build.bat to rebuild the project
-echo 3. Edit the source files in the src directory
+echo 1. Open the project in Visual Studio Code or any other IDE of your choice
+echo 2. Use build.bat to rebuild the project based on CMakeLists.txt configuration
+echo 3. Edit the source files in the src directory 
 echo.
 
 pause
