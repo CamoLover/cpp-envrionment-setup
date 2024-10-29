@@ -77,16 +77,6 @@ if %errorlevel% equ 0 (
 
 :: Verify G++ installation
 echo Verifying G++ installation...
-
-@REM Uncomment this if problem during installation
-@REM where g++ >nul 2>&1
-@REM if %errorlevel% neq 0 (
-@REM     echo ERROR: G++ not found in PATH
-@REM     echo Current PATH: %PATH%
-@REM     pause
-@REM     exit /b 1
-@REM )
-
 g++ --version || (
     echo ERROR: G++ not working properly
     pause
@@ -208,90 +198,73 @@ echo Creating build.bat...
 echo @echo off
 echo setlocal enabledelayedexpansion
 echo.
-echo color b
+echo color a
 echo.
 echo :: Get the directory where the batch file is located
 echo set "SCRIPT_DIR=%%~dp0"
 echo cd /d "%%SCRIPT_DIR%%"
 echo.
-echo echo Building project in: %%CD%% 
-echo echo Powered by Camolover
-echo echo.
+echo echo Building project in: %%SCRIPT_DIR%% 
 echo.
-echo :: Extract project name from CMakeLists.txt
-echo for /f "tokens=2 delims=^(^)" %%%%a in ^('findstr /R "^project" "CMakeLists.txt"'^) do ^(
-echo     set "PROJECT_NAME=%%%%a"
+echo :: Extract the project name from CMakeLists.txt
+echo set "PROJECT_NAME="
+echo for /f "usebackq tokens=2 delims=()" %%%%A in ^(`findstr /ri "^project(" "%%SCRIPT_DIR%%CMakeLists.txt"`^) do ^(
+echo     set "PROJECT_NAME=%%%%A"
 echo ^)
 echo.
 echo set "PROJECT_NAME=%%PROJECT_NAME: =%%"
-echo.
-echo echo Project name is: %%PROJECT_NAME%% 
-echo echo.
-echo.
-echo if not exist "build" mkdir "build"
-echo cd build
-echo.
-echo echo Running CMake configure...
-echo cmake -G "MinGW Makefiles" ..
-echo if errorlevel 1 ^(
-echo     echo ERROR: CMake configuration failed
-echo     cd .. 
+echo if not defined PROJECT_NAME ^(
+echo     echo ERROR: Could not determine project name from CMakeLists.txt
 echo     pause
 echo     exit /b 1
 echo ^)
+echo echo Project name is: %%PROJECT_NAME%%
 echo.
-echo echo Building project...
+echo :: Create the build directory if it doesn't exist
+echo if not exist "%%SCRIPT_DIR%%build" ^(
+echo     echo Creating build directory...
+echo     mkdir "%%SCRIPT_DIR%%build" || ^(
+echo         echo ERROR: Failed to create build directory.
+echo         exit /b 1
+echo     ^)
+echo ^)
+echo.
+echo :: Navigate to the build directory
+echo cd "%%SCRIPT_DIR%%build"
+echo.
+echo :: Run CMake to configure the project
+echo echo Running CMake...
+echo cmake ..
+echo.
+echo :: Build the project
+echo echo Building the project...
 echo cmake --build .
-echo if errorlevel 1 ^(
-echo     echo ERROR: Build failed
-echo     cd .. 
-echo     pause
-echo     exit /b 1
-echo ^)
 echo.
-echo echo Build successful^^!
-echo echo.
+echo :: Locate and execute the executable
+echo echo Attempting to locate the executable:
+echo ======================================================
 echo.
-echo :: Run the executable
-echo if exist "%%PROJECT_NAME%%.exe" ^(
-echo     echo Running %%PROJECT_NAME%%.exe :
-echo     echo =====================
-echo     %%PROJECT_NAME%%.exe
-echo     echo =====================
+echo set "EXE_PATH=%%SCRIPT_DIR%%build\\Debug\\%%PROJECT_NAME%%.exe"
+echo if exist "%%EXE_PATH%%" ^(
+echo     call "%%EXE_PATH%%" 
 echo ^) else ^(
-echo     echo Executable not found
+echo     echo ERROR: Could not locate executable %%PROJECT_NAME%%.exe in the build directory.
 echo ^)
+echo.
+echo echo ======================================================
 echo.
 echo cd ..
 echo pause
 ) > "%SCRIPT_DIR%build.bat"
 
-:: Initial build
+
+
+:: Initial build - Execute the created build.bat
 echo.
-echo Performing initial build...
+echo Performing initial build using build.bat...
 echo.
 
-cd build
-
-echo Running CMake...
-cmake -G "MinGW Makefiles" ..
-if errorlevel 1 (
-    echo ERROR: CMake configuration failed
-    cd .. 
-    pause
-    exit /b 1
-)
-
-echo Building project...
-cmake --build .
-if errorlevel 1 (
-    echo ERROR: Build failed
-    cd .. 
-    pause
-    exit /b 1
-)
-
-cd ..
+call "%SCRIPT_DIR%build.bat"
 
 echo.
 echo Setup complete! You can now:
