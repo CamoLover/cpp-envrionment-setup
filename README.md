@@ -4,21 +4,15 @@ This repository contains a collection of C++ projects along with automated setup
 
 ## Projects Overview
 
-### 1. Test Project
-A simple "Hello, World!" application to verify the C++ environment setup.
-
-### 2. Number Guessing Game
+### 1. Number Guessing Game
 An interactive game where:
 - Computer picks a random number between 0 and 100
 - Player makes guesses
 - Computer provides "higher" or "lower" hints
 - Game tracks the number of guesses until correct
 
-### 3. Mystery Island
+### 32. Mystery Island
 A text-based adventure game where players navigate through an interactive story.
-
-### 4. SCiPnet
-A fake SCP terminal, ressembling a SCiPnet terminal from the SCP foundation.
 
 ## Setup Instructions
 
