@@ -1,7 +1,9 @@
 # C++ Projects Collection
 
 This repository contains a collection of C++ projects along with automated setup and build scripts for Windows environments.
+
 [![](https://visitcount.itsvg.in/api?id=CPPsetup&label=Repo%20View&color=6&icon=5&pretty=true)](https://visitcount.itsvg.in)
+
 ## Projects Overview
 
 ### 1. Number Guessing Game
