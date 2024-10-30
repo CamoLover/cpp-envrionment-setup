@@ -13,7 +13,7 @@ An interactive game where:
 - Computer provides "higher" or "lower" hints
 - Game tracks the number of guesses until correct
 
-### 32. Mystery Island
+### 2. Mystery Island
 A text-based adventure game where players navigate through an interactive story.
 
 ## Setup Instructions
