@@ -23,6 +23,7 @@ A text-based adventure game where players navigate through an interactive story.
    - Right-click `setup_cpp_project.bat` and select "Run as administrator"
    - The script will:
      - Install necessary dependencies
+     - Install Visual Studio Code if wanted
      - Generate required configuration files
      - Set up the C++ development environment
 
